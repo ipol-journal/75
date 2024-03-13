@@ -15,7 +15,6 @@ ap.add_argument("--m", type=int)
 args = ap.parse_args()
 
 #string to bool
-w = args.w.lower() == 'true'
 list_commands = ""
 
 def runCommand(command, stdOut=None, stdErr=None, comp=None):
