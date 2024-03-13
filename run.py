@@ -65,22 +65,6 @@ def commentsResultContourFile(command, fileStrContours):
     shutil.copy('tmp.dat', fileStrContours)
     os.remove('tmp.dat')
 
-##  -------
-## process 2: extract contour files
-## ---------
-with open("inputPolygon.txt", "w") as f, open("algoLog.txt", "w") as fInfo:
-        command_args = ['pgm2freeman']+ ['-min_size', str(args.m), '-image', 'inputNG.pgm']+ ['-outputSDPAll' ]
-
-        if not args.thresholdtype:  #autothreshold means thresholdtype=1
-            command_args += ['-maxThreshold', str(args.tmax)]+ \
-                            ['-minThreshold', str(args.tmin)]
-
-        cmd = runCommand(command_args, f, fInfo, comp = ' > inputPolygon.txt')
-
-        if os.path.getsize("inputPolygon.txt") == 0:
-            raise ValueError
-
-
 
 # t, m, autothreshold
 
@@ -107,7 +91,6 @@ with open("input_0.pgm", "r") as fInput, open("inputContour.txt", "w") as f, ope
             with open('demo_failure.txt', 'w') as file:
                 file.write("The parameters given produce no contours, please change them.")
                 sys.exit(0)
-
 
 #Recover otsu max value from log
 with open("info.txt", "r") as fInfo:
