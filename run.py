@@ -17,12 +17,12 @@ args = ap.parse_args()
 #string to bool
 list_commands = ""
 
-def runCommand(command, stdOut=None, stdErr=None, comp=None):
+def runCommand(command, stdIn=None, stdOut=None, stdErr=None, comp=None, outFileName=None):
     """
     Run command and update the attribute list_commands
     """
     global list_commands
-    p = subprocess.run(command, stderr=stdErr, stdout=stdOut)
+    p = subprocess.run(command, stdin=stdIn, stderr=stdErr, stdout=stdOut)    
     index = 0
     # transform convert.sh in it classic prog command (equivalent)
     for arg in command:
@@ -33,6 +33,8 @@ def runCommand(command, stdOut=None, stdErr=None, comp=None):
                 for arg in command ])
     if comp is not None:
         command_to_save += comp
+    if outFileName is not None:
+        command_to_save += ' > ' + outFileName
     list_commands +=  command_to_save + '\n'
     return command_to_save
 
