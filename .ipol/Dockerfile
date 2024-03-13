@@ -10,9 +10,9 @@ COPY . .
 WORKDIR $bin/meaningfulscaleDemo
 RUN cmake CMakeLists.txt
 RUN make
-WORKDIR $bin/bin
+WORKDIR $bin/meaningfulscaleDemo/bin 
 RUN cp pgm2freeman $bin
-WORKDIR $bin/demoIPOL
+WORKDIR $bin/meaningfulscaleDemo/demoIPOL
 RUN cp meaningfulScaleEstim convert.sh transformBG.sh convertFig.sh $bin
 
 # the execution will happen in the folder /workdir/exec
