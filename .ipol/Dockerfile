@@ -13,7 +13,7 @@ RUN make
 WORKDIR $bin/meaningfulscaleDemo/bin 
 RUN cp pgm2freeman $bin
 WORKDIR $bin/meaningfulscaleDemo/demoIPOL
-RUN cp meaningfulScaleEstim convert.sh transformBG.sh convertFig.sh $bin
+RUN cp meaningfulScaleEstim transformBG.sh $bin
 
 # the execution will happen in the folder /workdir/exec
 # it will be created by IPOL
