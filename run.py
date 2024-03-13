@@ -124,8 +124,8 @@ with open("noiseLevels.txt", "w") as foutput, open("logMS.txt", "w") as fLog, op
                     ['-drawXFIGNoiseLevel', '-setFileNameFigure']+\
                     ['noiseLevel.fig', '-drawContourSRC', '4', '1']+\
                     ['-afficheImage', 'input_0BG.png']+\
-                    [str(Image('input_0BG.png').size[0])] +\
-                    [str(Image('input_0BG.png').size[1])] +\
+                    [str(Image.open('input_0BG.png').size[0])] +\
+                    [str(Image.open('input_0BG.png').size[1])] +\
                     ['-setPosImage', '1', '1', '-printNoiseLevel'] + \
                     ['-processAllContours']
     try:
