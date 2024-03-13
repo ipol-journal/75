@@ -44,7 +44,7 @@ def commentsResultContourFile(command, fileStrContours):
     or file format info)
     """
 
-    with open("tmp.dat", "w") as contoursList:
+    with open("tmp.dat", "w") as contoursList, open("inputContour.txt", "r") as f:
         contoursList.write("# Set of resulting contours obtained from the " +\
                         "pgm2freeman algorithm. \n")
         contoursList.write( "# Each line corresponds to a digital "  + \
@@ -56,8 +56,7 @@ def commentsResultContourFile(command, fileStrContours):
         contoursList.write( "# Command to reproduce the result of the "+\
                         "algorithm:\n")
         contoursList.write("# "+ command+'\n \n')
-    
-    with open("inputContour.txt", "r") as f:
+
         index = 0
         for line in f:
             contoursList.write("# contour number: "+ str(index) + "\n")
