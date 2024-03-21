@@ -22,7 +22,7 @@ def runCommand(command, stdIn=None, stdOut=None, stdErr=None, comp=None, outFile
     Run command and update the attribute list_commands
     """
     global list_commands
-    p = subprocess.run(command, stdin=stdIn, stderr=stdErr, stdout=stdOut)    
+    p = subprocess.run(command, stdin=stdIn, stderr=stdErr, stdout=stdOut)
     index = 0
     # transform convert.sh in it classic prog command (equivalent)
     for arg in command:
@@ -82,8 +82,8 @@ runCommand(command_args)
 with open("input_0.pgm", "r") as fInput, open("inputContour.txt", "w") as f, open("info.txt", "w") as fInfo:        
         command_args = ['pgm2freeman']
         if not args.thresholdtype:  #autothreshold means thresholdtype=1
-            command_args += ['-threshold', str(args.tmax) ]
-            command_args += ['-min_size', str(args.m) ]
+            command_args += ['-threshold', str(args.tmax)]+ \
+                            ['-min_size', str(args.m)]
                         
         cntExtractionCmd = runCommand(command_args, stdIn=fInput, stdOut=f, stdErr=fInfo, comp = ' < input_0.pgm > inputContour.txt')
 
@@ -118,22 +118,22 @@ runCommand(command_args)
 ##  -------
 ## process 4:
 ## ---------
-with open("noiseLevels.txt", "w") as foutput, open("logMS.txt", "w") as fLog, open("inputContour.txt", "r") as fInput:
-
-    command_args = ['meaningfulScaleEstim', '-enteteXFIG']+\
-                    ['-drawXFIGNoiseLevel', '-setFileNameFigure']+\
-                    ['noiseLevel.fig', '-drawContourSRC', '4', '1']+\
-                    ['-afficheImage', 'input_0BG.png']+\
-                    [str(Image.open('input_0BG.png').size[0])] +\
-                    [str(Image.open('input_0BG.png').size[1])] +\
-                    ['-setPosImage', '1', '1', '-printNoiseLevel'] + \
-                    ['-processAllContours']
-    try:
-        num_lines = sum(1 for line in fInput)
-        num_contours = num_lines
+try:
+    with open('inputContour.txt', 'r') as fInput, open('noiseLevels.txt', 'w') as foutput, open('logMs.txt', 'w') as fLog:
+        command_args = ['meaningfulScaleEstim', '-enteteXFIG']+\
+                        ['-drawXFIGNoiseLevel', '-setFileNameFigure']+\
+                        ['noiseLevel.fig', '-drawContourSRC', '4', '1']+\
+                        ['-afficheImage', 'input_0BG.png']+\
+                        [str(Image.open('input_0BG.png').size[0])] +\
+                        [str(Image.open('input_0BG.png').size[1])] +\
+                        ['-setPosImage', '1', '1', '-printNoiseLevel'] + \
+                        ['-processAllContours']
+        
         runCommand(command_args, stdIn=fInput, stdOut=foutput, stdErr=fLog, comp="< inputContour.txt > noiseLevels.txt")
-    except (OSError, RuntimeError):
-        fLog.write("Some contours were not processed.")
+
+except (OSError, RuntimeError):
+    fLog.write("Some contours were not processed.")
+
 
 p = subprocess.run(['convertFig.sh','noiseLevel.fig'])
 
@@ -147,7 +147,6 @@ with open('noiseLevelWhiteBG.fig', "w") as foutput, open('logTransform.txt', "w"
     
     runCommand(command_args,  stdOut=foutput, \
                     stdErr=fLog, comp=" > noiseLevelWhiteBG.fig")
-
 
 shutil.copy('resu.png', 'resuBG.png')
 shutil.copy('resu.eps', 'resuBG.eps')
